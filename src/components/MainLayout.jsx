@@ -9,7 +9,7 @@ const MainLayout = () => {
       <Navbar />
 
       {/* Main content */}
-      <main className="flex-1 main-fallback pt-16">
+      <main className="flex-1 main-fallback pt-[74px]">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <Outlet />
         </div>

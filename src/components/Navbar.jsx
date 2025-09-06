@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { 
   HomeIcon, 
@@ -18,7 +18,9 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMarsRoverDropdownOpen, setIsMarsRoverDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
   // Handle scroll effect for navbar transparency
@@ -51,6 +53,21 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
     setIsMarsRoverDropdownOpen(false);
   }, [location]);
+
+  // Handle navigation with loading
+  const handleNavigation = (href) => {
+    if (location.pathname !== href) {
+      setIsLoading(true);
+      setIsMobileMenuOpen(false);
+      setIsMarsRoverDropdownOpen(false);
+      
+      // Simulate loading time
+      setTimeout(() => {
+        navigate(href);
+        setIsLoading(false);
+      }, 500);
+    }
+  };
 
   const navigation = [
     { name: 'Home', href: '/', icon: HomeIcon },
@@ -89,12 +106,19 @@ const Navbar = () => {
         />
       )}
       
+      {/* Loading Indicator */}
+      {isLoading && (
+        <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 z-50">
+          <div className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 animate-pulse"></div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className={`${
         isScrolled 
           ? 'bg-gray-900/80 backdrop-blur-lg shadow-2xl border-b border-gray-700/50' 
           : 'bg-gray-900 shadow-xl border-b border-gray-800'
-      } fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out`}>
+      } fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isLoading ? 'top-1' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo on the left */}
@@ -138,15 +162,17 @@ const Navbar = () => {
                               Mars Rover Versions
                             </div>
                             {item.dropdown.map((dropdownItem) => (
-                              <Link
+                              <button
                                 key={dropdownItem.name}
-                                to={dropdownItem.href}
-                                onClick={() => setIsMarsRoverDropdownOpen(false)}
+                                onClick={() => {
+                                  handleNavigation(dropdownItem.href);
+                                  setIsMarsRoverDropdownOpen(false);
+                                }}
                                 className={`${
                                   isActive(dropdownItem.href)
                                     ? 'bg-indigo-900 text-indigo-100 border-l-4 border-indigo-400'
                                     : 'text-gray-300 hover:bg-gray-700 hover:text-white border-l-4 border-transparent'
-                                } block px-4 py-3 transition-all duration-300 group/item`}
+                                } block px-4 py-3 transition-all duration-300 group/item w-full text-left focus:outline-none focus:bg-gray-700`}
                               >
                                 <div className="font-medium flex items-center">
                                   {dropdownItem.name}
@@ -159,7 +185,7 @@ const Navbar = () => {
                                     {dropdownItem.description}
                                   </div>
                                 )}
-                              </Link>
+                              </button>
                             ))}
                           </div>
                         )}
@@ -173,9 +199,9 @@ const Navbar = () => {
                       to={item.href}
                       className={`${
                         isActive(item.href)
-                          ? 'text-white border-b-2 border-indigo-400'
-                          : 'text-gray-300 hover:text-white'
-                      } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group relative pb-1`}
+                          ? 'text-white underline decoration-indigo-400 decoration-2 underline-offset-4'
+                          : 'text-gray-300 hover:text-white hover:underline hover:decoration-white hover:decoration-1 hover:underline-offset-4'
+                      } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group relative pb-1 focus:outline-none focus:underline focus:decoration-indigo-400 focus:decoration-2 focus:underline-offset-4`}
                     >
                       <Icon className="h-4 w-4 mr-1 group-hover:scale-110 transition-transform duration-300" />
                       {item.name}
@@ -215,7 +241,7 @@ const Navbar = () => {
               : 'bg-gray-900 border-t border-gray-800'
           } transition-all duration-300`}>
             <div className="pt-2 pb-3 space-y-1">
-              {navigation.map((item, index) => {
+              {navigation.map((item) => {
                 const Icon = item.icon;
                 
                 if (item.dropdown) {
@@ -247,10 +273,10 @@ const Navbar = () => {
                           Rover Versions
                         </div>
                         {item.dropdown.map((dropdownItem) => (
-                          <Link
+                          <button
                             key={dropdownItem.name}
-                            to={dropdownItem.href}
                             onClick={() => {
+                              handleNavigation(dropdownItem.href);
                               setIsMobileMenuOpen(false);
                               setIsMarsRoverDropdownOpen(false);
                             }}
@@ -258,13 +284,13 @@ const Navbar = () => {
                               isActive(dropdownItem.href)
                                 ? 'bg-indigo-900 text-indigo-100'
                                 : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                            } block px-4 py-3 rounded-md text-sm transition-all duration-300`}
+                            } block px-4 py-3 rounded-md text-sm transition-all duration-300 w-full text-left focus:outline-none focus:bg-gray-800`}
                           >
                             <div className="font-medium">{dropdownItem.name}</div>
                             {dropdownItem.description && (
                               <div className="text-xs text-gray-400 mt-1">{dropdownItem.description}</div>
                             )}
-                          </Link>
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -272,21 +298,20 @@ const Navbar = () => {
                 }
                 
                 return (
-                  <Link
+                  <button
                     key={item.name}
-                    to={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => handleNavigation(item.href)}
                     className={`${
                       isActive(item.href)
-                        ? 'bg-gray-800 text-white'
-                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                    } block px-3 py-3 rounded-md mx-2 text-base font-medium transition-all duration-300 transform hover:translate-x-2`}
+                        ? 'bg-gray-800 text-white underline decoration-indigo-400 decoration-2 underline-offset-4'
+                        : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:underline hover:decoration-white hover:decoration-1 hover:underline-offset-4'
+                    } block px-3 py-3 rounded-md mx-2 text-base font-medium transition-all duration-300 transform hover:translate-x-2 focus:outline-none focus:underline focus:decoration-indigo-400 focus:decoration-2 focus:underline-offset-4 w-full text-left`}
                   >
                     <div className="flex items-center">
                       <Icon className="h-5 w-5 mr-3" />
                       {item.name}
                     </div>
-                  </Link>
+                  </button>
                 );
               })}
             </div>

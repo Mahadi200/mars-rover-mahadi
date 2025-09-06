@@ -23,7 +23,7 @@ import {
   DocumentChartBarIcon
 } from '@heroicons/react/24/outline';
 
-const Systems = ({ roverVersion = "1.0" }) => {
+const Systems = ({ roverVersion: _roverVersion = "1.0" }) => {
   const [selectedSystem, setSelectedSystem] = useState('power');
   const [diagnosticsRunning, setDiagnosticsRunning] = useState(false);
   const [diagnosticsProgress, setDiagnosticsProgress] = useState(0);
@@ -886,7 +886,7 @@ const Systems = ({ roverVersion = "1.0" }) => {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
-        {systemOverview.map((system, index) => {
+        {systemOverview.map((system) => {
           const Icon = system.icon;
           return (
             <motion.div
@@ -975,8 +975,8 @@ const Systems = ({ roverVersion = "1.0" }) => {
           <div className="bg-gray-800/50 rounded-lg p-4 backdrop-blur-sm border border-gray-700">
             <h3 className="text-lg font-bold text-white mb-4">Diagnostic Tests</h3>
             <div className="space-y-2">
-              {diagnosticTests.map((test, index) => (
-                <div key={index} className="p-3 bg-gray-700/30 rounded-lg border border-gray-600/30">
+              {diagnosticTests.map((test, _index) => (
+                <div key={_index} className="p-3 bg-gray-700/30 rounded-lg border border-gray-600/30">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-white font-medium">{test.name}</span>
                     <div className="flex items-center space-x-2">

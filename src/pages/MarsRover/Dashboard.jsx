@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// eslint-disable-next-line
 import { motion } from 'framer-motion';
 import MarsBackground from '../../components/MarsBackground';
 import {

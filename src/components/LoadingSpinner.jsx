@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';

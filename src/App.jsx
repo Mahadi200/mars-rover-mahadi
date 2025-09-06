@@ -79,18 +79,6 @@ function AppContent() {
           <Route path="communication" element={<Systems />} />
           <Route path="diagnostics" element={<Systems />} />
         </Route>
-        
-        {/* Custom route for mars-rover-1 */}
-        <Route path="/mars-rover-1/*" element={<MarsRoverLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="camera" element={<LiveCamera />} />
-          <Route path="navigation" element={<Navigation />} />
-          <Route path="science" element={<ScienceLab />} />
-          <Route path="features" element={<Features />} />
-          <Route path="power" element={<Systems />} />
-          <Route path="communication" element={<Systems />} />
-          <Route path="diagnostics" element={<Systems />} />
-        </Route>
       </Routes>
     </Suspense>
   );

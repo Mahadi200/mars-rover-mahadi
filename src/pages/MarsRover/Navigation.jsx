@@ -32,14 +32,14 @@ import {
   SparklesIcon
 } from '@heroicons/react/24/outline';
 
-const Navigation = ({ roverVersion = "1.0" }) => {
-  const [currentPosition, setCurrentPosition] = useState({ lat: -4.5, lng: 137.4 });
-  const [targetWaypoint, setTargetWaypoint] = useState({ lat: -4.4985, lng: 137.4012 });
+const Navigation = ({ roverVersion: _roverVersion = "1.0" }) => {
+  const [currentPosition, _setCurrentPosition] = useState({ lat: -4.5, lng: 137.4 });
+  const [_targetWaypoint, setTargetWaypoint] = useState({ lat: -4.4985, lng: 137.4012 });
   const [roverStatus, setRoverStatus] = useState('stopped');
   const [batteryLevel, setBatteryLevel] = useState(87);
   const [distanceTraveled, setDistanceTraveled] = useState(28.47);
   const [currentSpeed, setCurrentSpeed] = useState(0);
-  const [terrain, setTerrain] = useState('rocky');
+  const [terrain, _setTerrain] = useState('rocky');
   const [autoNavMode, setAutoNavMode] = useState(false);
   const [pathOptimization, setPathOptimization] = useState(true);
   const [hazardAvoidance, setHazardAvoidance] = useState(true);
@@ -98,7 +98,7 @@ const Navigation = ({ roverVersion = "1.0" }) => {
     },
   ]);
 
-  const [obstacles, setObstacles] = useState([
+  const [obstacles, _setObstacles] = useState([
     { 
       id: 1, 
       type: 'rock_outcrop', 

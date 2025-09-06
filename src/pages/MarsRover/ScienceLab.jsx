@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MarsBackground from '../../components/MarsBackground';
 import {
@@ -32,24 +32,24 @@ import {
   StopIcon
 } from '@heroicons/react/24/outline';
 
-const ScienceLab = ({ roverVersion = "1.0" }) => {
+const ScienceLab = ({ roverVersion: _roverVersion = "1.0" }) => {
   const [selectedSample, setSelectedSample] = useState(null);
   const [activeInstrument, setActiveInstrument] = useState('ChemCam');
   const [analysisInProgress, setAnalysisInProgress] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
-  const [labMode, setLabMode] = useState('analysis'); // 'analysis', 'spectroscopy', 'molecular', 'quantum'
-  const [holographicView, setHolographicView] = useState(false);
-  const [aiAssistant, setAiAssistant] = useState(true);
+  const [labMode, _setLabMode] = useState('analysis'); // 'analysis', 'spectroscopy', 'molecular', 'quantum'
+  const [_holographicView, _setHolographicView] = useState(false);
+  const [_aiAssistant, _setAiAssistant] = useState(true);
   const [quantumProcessor, setQuantumProcessor] = useState(false);
-  const [molecularScanning, setMolecularScanning] = useState(false);
+  const [molecularScanning, _setMolecularScanning] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [systemHealth, setSystemHealth] = useState(98);
   const [powerConsumption, setPowerConsumption] = useState(65);
   const [processingUnits, setProcessingUnits] = useState(12);
   const [activeScans, setActiveScans] = useState(3);
   const [discoveryMode, setDiscoveryMode] = useState(false);
-  const hologramRef = useRef(null);
-  const particleRef = useRef(null);
+  const _hologramRef = useRef(null);
+  const _particleRef = useRef(null);
 
   const instruments = [
     {
@@ -132,7 +132,7 @@ const ScienceLab = ({ roverVersion = "1.0" }) => {
     }
   ];
 
-  const samples = [
+  const samples = useMemo(() => [
     {
       id: 'SAMPLE_001',
       name: 'Martian Rock Alpha',
@@ -177,7 +177,7 @@ const ScienceLab = ({ roverVersion = "1.0" }) => {
       composition: null,
       findings: ['Awaiting analysis']
     }
-  ];
+  ], []);
 
   const analysisQueue = [
     { id: 1, sample: 'SAMPLE_002', instrument: 'ChemCam', estimatedTime: '45 min', priority: 'high' },
@@ -270,7 +270,7 @@ const ScienceLab = ({ roverVersion = "1.0" }) => {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [discoveryMode, analysisInProgress]);
+  }, [discoveryMode, analysisInProgress, samples]);
 
   const startAnalysis = (sampleId, instrumentId) => {
     setAnalysisInProgress(true);
@@ -319,7 +319,7 @@ const ScienceLab = ({ roverVersion = "1.0" }) => {
     }
   };
 
-  const getPriorityColor = (priority) => {
+  const _getPriorityColor = (priority) => {
     switch (priority) {
       case 'high': return 'text-red-400 bg-red-400/10';
       case 'medium': return 'text-amber-400 bg-amber-400/10';

@@ -34,8 +34,6 @@ const About = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const backgroundRef = useRef(null);
-  const marsRoverRef = useRef(null);
-  const particleRefs = useRef([]);
 
   // Enhanced 3D Mars Background Effects
   useEffect(() => {

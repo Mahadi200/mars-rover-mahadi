@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MarsBackground from '../../components/MarsBackground';
 import {
@@ -23,7 +23,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 
-const LiveCamera = ({ roverVersion = "1.0" }) => {
+const LiveCamera = ({ roverVersion: _roverVersion = "1.0" }) => {
   const [selectedCamera, setSelectedCamera] = useState('MAST');
   const [isRecording, setIsRecording] = useState(false);
   const [isStreamActive, setIsStreamActive] = useState(true);
@@ -44,11 +44,9 @@ const LiveCamera = ({ roverVersion = "1.0" }) => {
   });
   const [lastImageTime, setLastImageTime] = useState(new Date());
   const [recordingDuration, setRecordingDuration] = useState(0);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
 
   // Real Mars rover images from different cameras
-  const marsImages = {
+  const marsImages = useMemo(() => ({
     MAST: [
       {
         url: 'https://mars.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044631300503690E01_DXXX.jpg',
@@ -99,7 +97,7 @@ const LiveCamera = ({ roverVersion = "1.0" }) => {
         timestamp: '2023-08-22T13:42:00Z'
       }
     ]
-  };
+  }), []);
 
   const cameras = [
     { 

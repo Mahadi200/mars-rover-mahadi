@@ -167,7 +167,7 @@ const Contact = () => {
         message: '',
         contactType: 'general'
       });
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

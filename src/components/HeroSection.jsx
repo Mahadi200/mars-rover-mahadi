@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   RocketLaunchIcon,
@@ -82,7 +81,7 @@ const HeroSection = () => {
   return (
     <div 
       ref={heroRef}
-      className="relative h-[90vh] overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-black rounded-[30px]"
+      className="relative h-[90vh] overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-black rounded-[30px] mx-4 sm:mx-6 lg:mx-8"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -126,10 +125,10 @@ const HeroSection = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 0.3, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ duration: 1 }}
+          initial={{ opacity: 0, scale: 1.05, x: 100 }}
+          animate={{ opacity: 0.3, scale: 1, x: 0 }}
+          exit={{ opacity: 0, scale: 0.95, x: -100 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
           className="absolute inset-0 z-0 rounded-[30px]"
         >
           <img
@@ -148,11 +147,11 @@ const HeroSection = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 100 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="space-y-8"
+              initial={{ opacity: 0, x: -50, y: 20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, x: 50, y: -20 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="space-y-6 sm:space-y-8"
             >
               {/* Animated Welcome Badge */}
               <motion.div
@@ -356,11 +355,14 @@ const HeroSection = () => {
           <motion.button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.2, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 ${
               index === currentSlide
-                ? 'bg-white shadow-lg shadow-white/50'
+                ? 'bg-white shadow-lg shadow-white/50 scale-110'
                 : 'bg-white/30 hover:bg-white/50'
             }`}
           />
