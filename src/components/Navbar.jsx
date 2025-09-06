@@ -17,8 +17,20 @@ import {
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMarsRoverDropdownOpen, setIsMarsRoverDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef(null);
+
+  // Handle scroll effect for navbar transparency
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -78,17 +90,25 @@ const Navbar = () => {
       )}
       
       {/* Navigation */}
-      <nav className="bg-gray-900 shadow-xl relative z-50 border-b border-gray-800">
+      <nav className={`${
+        isScrolled 
+          ? 'bg-gray-900/80 backdrop-blur-lg shadow-2xl border-b border-gray-700/50' 
+          : 'bg-gray-900 shadow-xl border-b border-gray-800'
+      } fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo on the left */}
             <div className="flex-shrink-0 flex items-center">
-              <div className="text-white text-xl font-bold flex items-center">
-                <RocketLaunchIcon className="h-6 w-6 mr-2 text-indigo-400" />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+              <Link to="/" className="flex items-center">
+                <img 
+                  src="/Images/image.png" 
+                  alt="Mars Rover Logo" 
+                  className="h-10 w-auto mr-3 hover:scale-105 transition-transform duration-300"
+                />
+                <span className="text-white text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
                   Mars Rover
                 </span>
-              </div>
+              </Link>
             </div>
 
             {/* Menu on the right */}
@@ -189,7 +209,11 @@ const Navbar = () => {
             ? 'max-h-screen opacity-100' 
             : 'max-h-0 opacity-0 overflow-hidden'
         }`}>
-          <div className="bg-gray-900 border-t border-gray-800">
+          <div className={`${
+            isScrolled 
+              ? 'bg-gray-900/90 backdrop-blur-lg border-t border-gray-700/50' 
+              : 'bg-gray-900 border-t border-gray-800'
+          } transition-all duration-300`}>
             <div className="pt-2 pb-3 space-y-1">
               {navigation.map((item, index) => {
                 const Icon = item.icon;

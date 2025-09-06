@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   RocketLaunchIcon,
@@ -20,14 +21,14 @@ const HeroSection = () => {
 
   const slides = [
     {
-      title: "Welcome to Mars",
-      subtitle: "Explore the Red Planet",
-      description: "Join humanity's greatest adventure in space exploration with cutting-edge technology and groundbreaking discoveries.",
+      title: "Hello Explorers! Join us as we build and control our very own Mars Rover",
+      subtitle: "Explore The planet by Mars Rover(Voyager of Light)",
+      description: "Journey to Mars,the Red planet where Science Technology,and human curiosity come together to explore new worlds,unlock mysteries and push the boundaries of discovery",
       image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&auto=format&fit=crop&q=80",
       color: "from-red-600 to-orange-500"
     },
     {
-      title: "Mars Rover X1",
+      title: "Mars Rover V1",
       subtitle: "Advanced Exploration",
       description: "Our state-of-the-art rover is equipped with quantum sensors, AI navigation, and revolutionary scientific instruments.",
       image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&auto=format&fit=crop&q=80",
@@ -43,10 +44,10 @@ const HeroSection = () => {
   ];
 
   const stats = [
-    { icon: RocketLaunchIcon, value: "2.5K", label: "Sols Operational", color: "text-red-400" },
-    { icon: GlobeAltIcon, value: "47.2", label: "Kilometers Traveled", color: "text-blue-400" },
-    { icon: BeakerIcon, value: "1,247", label: "Samples Analyzed", color: "text-emerald-400" },
-    { icon: CameraIcon, value: "15.8K", label: "Images Captured", color: "text-purple-400" }
+    { icon: RocketLaunchIcon, value: "2.5K", label: "Sols Operational", color: "text-red-400", hideOnMobile: true },
+    { icon: GlobeAltIcon, value: "47.2", label: "Kilometers Traveled", color: "text-blue-400", hideOnMobile: true },
+    { icon: BeakerIcon, value: "1,247", label: "Samples Analyzed", color: "text-emerald-400", hideOnMobile: true },
+    { icon: CameraIcon, value: "15.8K", label: "Images Captured", color: "text-purple-400", hideOnMobile: true }
   ];
 
   useEffect(() => {
@@ -81,39 +82,40 @@ const HeroSection = () => {
   return (
     <div 
       ref={heroRef}
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-black"
+      className="relative h-[90vh] overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-black rounded-[30px]"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Animated Background Particles */}
       {particleAnimation && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-white/20 rounded-full"
               initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+                y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
                 opacity: 0
               }}
               animate={{
                 x: [
-                  Math.random() * window.innerWidth,
-                  Math.random() * window.innerWidth,
-                  Math.random() * window.innerWidth
+                  Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200)
                 ],
                 y: [
-                  Math.random() * window.innerHeight,
-                  Math.random() * window.innerHeight,
-                  Math.random() * window.innerHeight
+                  Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+                  Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800)
                 ],
-                opacity: [0, 1, 0]
+                opacity: [0, 0.8, 0]
               }}
               transition={{
-                duration: 8 + Math.random() * 4,
+                duration: 6 + Math.random() * 3,
                 repeat: Infinity,
-                delay: Math.random() * 5
+                delay: Math.random() * 3,
+                ease: "easeInOut"
               }}
             />
           ))}
@@ -128,21 +130,21 @@ const HeroSection = () => {
           animate={{ opacity: 0.3, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 1 }}
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 rounded-[30px]"
         >
           <img
             src={currentSlideData.image}
             alt="Mars landscape"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-[30px]"
           />
-          <div className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.color}/60`}></div>
+          <div className={`absolute inset-0 bg-gradient-to-r ${currentSlideData.color}/60 rounded-[30px]`}></div>
         </motion.div>
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-between min-h-screen px-6 lg:px-16">
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between h-full px-4 sm:px-6 lg:px-16">
         {/* Left Content */}
-        <div className="flex-1 max-w-3xl">
+        <div className="flex-1 max-w-3xl w-full lg:w-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -169,9 +171,13 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-6xl lg:text-8xl font-bold leading-tight"
+                  whileHover={{ 
+                    scale: 1.02,
+                    textShadow: "0 0 30px rgba(59, 130, 246, 0.8)"
+                  }}
+                  className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight cursor-pointer group"
                 >
-                  <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:via-blue-300 group-hover:to-purple-400 transition-all duration-500">
                     {currentSlideData.title}
                   </span>
                 </motion.h1>
@@ -180,7 +186,12 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-2xl lg:text-4xl font-semibold text-gray-300"
+                  whileHover={{ 
+                    scale: 1.05,
+                    x: 10,
+                    textShadow: "0 0 20px rgba(251, 146, 60, 0.6)"
+                  }}
+                  className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-300 hover:text-orange-300 transition-all duration-300 cursor-pointer"
                 >
                   {currentSlideData.subtitle}
                 </motion.h2>
@@ -191,9 +202,16 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-xl text-gray-400 leading-relaxed max-w-2xl"
+                whileHover={{ 
+                  scale: 1.02,
+                  y: -5,
+                  textShadow: "0 0 15px rgba(34, 197, 94, 0.4)"
+                }}
+                className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-2xl hover:text-gray-300 transition-all duration-300 cursor-pointer group"
               >
-                {currentSlideData.description}
+                <span className="group-hover:text-emerald-300 transition-colors duration-300">
+                  {currentSlideData.description}
+                </span>
               </motion.p>
 
               {/* Action Buttons */}
@@ -201,12 +219,12 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
               >
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5)" }}
                   whileTap={{ scale: 0.98 }}
-                  className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 flex items-center space-x-2 shadow-lg shadow-blue-600/25"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/25 w-full sm:w-auto"
                 >
                   <RocketLaunchIcon className="h-5 w-5 group-hover:animate-bounce" />
                   <span>Explore Mars Rover</span>
@@ -215,7 +233,7 @@ const HeroSection = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center space-x-2"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2 w-full sm:w-auto"
                 >
                   <PlayIcon className="h-5 w-5 group-hover:text-cyan-400 transition-colors" />
                   <span>Watch Mission</span>
@@ -309,8 +327,8 @@ const HeroSection = () => {
         transition={{ delay: 0.8, duration: 0.8 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-6xl px-6"
       >
-        <div className="bg-black/30 backdrop-blur-sm rounded-2xl border border-white/10 p-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="bg-black/30 backdrop-blur-sm rounded-2xl border border-white/10 p-4 sm:p-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -320,11 +338,11 @@ const HeroSection = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.9 + index * 0.1 }}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="text-center group cursor-pointer"
+                  className={`text-center group cursor-pointer ${stat.hideOnMobile ? 'hidden md:block' : ''}`}
                 >
-                  <Icon className={`h-8 w-8 mx-auto mb-3 ${stat.color} group-hover:scale-110 transition-transform`} />
-                  <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <Icon className={`h-4 w-4 sm:h-5 sm:w-5 mx-auto mb-2 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                  <div className="text-sm sm:text-base font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-xs text-gray-400 leading-tight">{stat.label}</div>
                 </motion.div>
               );
             })}
@@ -333,7 +351,7 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-3">
+      <div className="absolute bottom-24 sm:bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-3">
         {slides.map((_, index) => (
           <motion.button
             key={index}
@@ -354,7 +372,7 @@ const HeroSection = () => {
         onClick={() => setParticleAnimation(!particleAnimation)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="absolute top-8 right-8 p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+        className="absolute top-4 right-4 sm:top-8 sm:right-8 p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
       >
         <SparklesIcon className={`h-6 w-6 ${particleAnimation ? 'text-cyan-400' : 'text-gray-400'}`} />
       </motion.button>

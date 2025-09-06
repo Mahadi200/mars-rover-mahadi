@@ -9,8 +9,13 @@ const MarsRoverLayout = () => {
   // Extract version from URL path - handle both /mars-rover-1 and /mars-rover-1.0 patterns
   let roverVersion = version;
   if (!roverVersion) {
-    const pathMatch = location.pathname.match(/mars-rover-(\d+(?:\.\d+)?)/);
-    roverVersion = pathMatch ? pathMatch[1] : "1";
+    // Check for mars-rover pattern first
+    const marsRoverMatch = location.pathname.match(/mars-rover-(\d+(?:\.\d+)?)/);
+    if (marsRoverMatch) {
+      roverVersion = marsRoverMatch[1];
+    } else {
+      roverVersion = "1"; // default fallback
+    }
   }
   
   // Extract base version number (remove .0 if present) for routing

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import MarsBackground from '../components/MarsBackground';
 import {
   PhoneIcon,
   EnvelopeIcon,
@@ -38,8 +39,8 @@ const Contact = () => {
       id: 'phone',
       icon: PhoneIcon,
       title: 'Phone',
-      details: ['+880 1833-136933', '+880 1730-662954', '+880 1747-611903'],
-      description: 'Call us directly for immediate assistance',
+      details: ['+8801833136933'],
+      description: 'Direct contact',
       gradient: 'from-green-500 to-emerald-600',
       action: 'tel:+8801833136933'
     },
@@ -47,37 +48,26 @@ const Contact = () => {
       id: 'email',
       icon: EnvelopeIcon,
       title: 'Email',
-      details: ['info@marsrover.com', 'team@marsrover.com', 'support@marsrover.com'],
-      description: 'Send us an email and we\'ll respond within 24 hours',
+      details: ['kaysanariz1@gmail.com'],
+      description: 'Send us an email',
       gradient: 'from-blue-500 to-cyan-600',
-      action: 'mailto:info@marsrover.com'
+      action: 'mailto:kaysanariz1@gmail.com'
     },
     {
       id: 'location',
       icon: MapPinIcon,
       title: 'Location',
-      details: ['South Point School & College', 'Malibagh, Dhaka', 'Bangladesh'],
-      description: 'Visit our research facility and laboratory',
+      details: ['South Point School and College', 'Malibagh, Dhaka'],
+      description: 'Visit our facility',
       gradient: 'from-purple-500 to-pink-600',
-      action: '#'
-    },
-    {
-      id: 'hours',
-      icon: ClockIcon,
-      title: 'Office Hours',
-      details: ['Monday - Friday: 9:00 AM - 6:00 PM', 'Saturday: 10:00 AM - 4:00 PM', 'Sunday: Closed'],
-      description: 'Our team is available during these hours',
-      gradient: 'from-orange-500 to-red-600',
       action: '#'
     }
   ];
 
   const contactTypes = [
-    { value: 'general', label: 'General Inquiry', icon: ChatBubbleLeftRightIcon, color: 'blue' },
+    { value: 'general', label: 'General', icon: ChatBubbleLeftRightIcon, color: 'blue' },
     { value: 'partnership', label: 'Partnership', icon: HeartIcon, color: 'purple' },
-    { value: 'technical', label: 'Technical Support', icon: RocketLaunchIcon, color: 'green' },
-    { value: 'media', label: 'Media & Press', icon: GlobeAltIcon, color: 'orange' },
-    { value: 'education', label: 'Educational', icon: AcademicCapIcon, color: 'indigo' },
+    { value: 'technical', label: 'Technical', icon: RocketLaunchIcon, color: 'green' },
     { value: 'sponsorship', label: 'Sponsorship', icon: BuildingOfficeIcon, color: 'pink' }
   ];
 
@@ -85,30 +75,30 @@ const Contact = () => {
     {
       name: 'Kaysan Ariz Zayan',
       role: 'Team Leader',
-      phone: '01833136933',
-      whatsapp: '01833136933',
+      phone: '+8801833136933',
+      whatsapp: '8801833136933',
       facebook: 'https://www.facebook.com/share/1JCohgZ5io/',
-      email: 'kaysan@marsrover.com',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80&ixlib=rb-4.0.3',
+      email: 'kaysanariz1@gmail.com',
+      image: '/Images/Kaysan Ariz zayan.jpg',
       gradient: 'from-blue-600 to-purple-600'
     },
     {
       name: 'Muhammad Muntasir Rahman',
       role: 'Senior Engineer',
-      phone: '01730662954',
-      whatsapp: '01730662954',
+      phone: '+8801730662954',
+      whatsapp: '8801730662954',
       facebook: 'https://www.facebook.com/share/1GfUvRFNhF/?mibextid=wwXIfr',
-      email: 'muntasir@marsrover.com',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80&ixlib=rb-4.0.3',
+      email: 'muhammadmuntasirrahman@gmail.com',
+      image: '/Images/Muhammad Muntasir Rahman.jpg',
       gradient: 'from-emerald-600 to-teal-600'
     },
     {
       name: 'Rahmatullah Khan Ayman',
       role: 'Research Scientist',
-      phone: '01747611903',
-      whatsapp: '01747611903',
-      email: 'ayman@marsrover.com',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format&fit=crop&q=80&ixlib=rb-4.0.3',
+      phone: '+8801747611903',
+      whatsapp: '8801747611903',
+      email: 'Rahmatullahkhanayman@gmail.com',
+      image: '/Images/Rahmatullah Khan Ayman.jpg',
       gradient: 'from-orange-600 to-red-600'
     }
   ];
@@ -186,9 +176,11 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* 3D Mars Background */}
+      <MarsBackground />
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-cyan-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-cyan-900/95 via-blue-900/95 to-indigo-900/95 backdrop-blur-sm text-white relative overflow-hidden z-10">
         {/* Animated Background */}
         <div className="absolute inset-0">
           {[...Array(60)].map((_, i) => (
@@ -231,14 +223,7 @@ const Contact = () => {
             </motion.div>
             
             <motion.h1 
-              className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity
-              }}
+              className="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent"
             >
               Contact Us
             </motion.h1>
@@ -247,31 +232,17 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl lg:text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed mb-8"
+              className="text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-6"
             >
-              Ready to join our mission to Mars? Get in touch with our team and let's explore 
-              the possibilities of space innovation together.
+              Get in touch with our Mars Rover team.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
-                <span className="text-cyan-300 font-semibold">🚀 Quick Response</span>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
-                <span className="text-blue-300 font-semibold">💫 Expert Support</span>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Information Cards */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/90 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -280,13 +251,13 @@ const Contact = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Get In Touch</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Multiple ways to reach our team. Choose the method that works best for you.
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Contact our team directly.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               const isHovered = hoveredCard === info.id;
@@ -322,19 +293,21 @@ const Contact = () => {
                       <Icon className="h-8 w-8 text-white" />
                     </motion.div>
                     
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-gray-800 transition-colors">
                       {info.title}
                     </h3>
                     
-                    <div className="space-y-2 mb-4">
+                    <div className="space-y-1 mb-3">
                       {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-gray-600 text-sm">
+                        <p key={idx} className={`text-gray-600 ${
+                          info.id === 'email' ? 'text-xs break-all' : 'text-sm'
+                        }`}>
                           {detail}
                         </p>
                       ))}
                     </div>
                     
-                    <p className="text-gray-500 text-sm mb-6">
+                    <p className="text-gray-500 text-xs mb-4">
                       {info.description}
                     </p>
 
@@ -374,7 +347,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50/90 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Form */}
@@ -385,28 +358,27 @@ const Contact = () => {
               viewport={{ once: true }}
               className="bg-white rounded-3xl p-8 shadow-lg"
             >
-              <div className="mb-8">
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">Send us a Message</h3>
-                <p className="text-gray-600">
-                  Fill out the form below and we'll get back to you as soon as possible.
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">Send Message</h3>
+                <p className="text-gray-600 text-sm">
+                  Send us a message and we'll respond soon.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Contact Type Selection */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    Type of Inquiry
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Inquiry Type
                   </label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-2">
                     {contactTypes.map((type) => {
                       const Icon = type.icon;
                       return (
                         <motion.label
                           key={type.value}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className={`relative flex items-center space-x-2 p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
+                          whileHover={{ scale: 1.01 }}
+                          className={`relative flex items-center space-x-2 p-2 rounded-lg border cursor-pointer transition-all duration-300 ${
                             formData.contactType === type.value
                               ? `border-${type.color}-500 bg-${type.color}-50`
                               : 'border-gray-200 hover:border-gray-300'
@@ -420,12 +392,12 @@ const Contact = () => {
                             onChange={handleInputChange}
                             className="sr-only"
                           />
-                          <Icon className={`h-4 w-4 ${
+                          <Icon className={`h-3 w-3 ${
                             formData.contactType === type.value 
                               ? `text-${type.color}-600` 
                               : 'text-gray-400'
                           }`} />
-                          <span className={`text-sm font-medium ${
+                          <span className={`text-xs font-medium ${
                             formData.contactType === type.value 
                               ? `text-${type.color}-700` 
                               : 'text-gray-600'
@@ -440,8 +412,8 @@ const Contact = () => {
 
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name *
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Name *
                   </label>
                   <div className="relative">
                     <UserIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -456,7 +428,7 @@ const Contact = () => {
                           ? 'border-red-300 focus:border-red-500' 
                           : 'border-gray-200 focus:border-blue-500'
                       }`}
-                      placeholder="Enter your full name"
+                      placeholder="Your name"
                     />
                   </div>
                   {errors.name && (
@@ -473,8 +445,8 @@ const Contact = () => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address *
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email *
                   </label>
                   <div className="relative">
                     <EnvelopeIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -489,7 +461,7 @@ const Contact = () => {
                           ? 'border-red-300 focus:border-red-500' 
                           : 'border-gray-200 focus:border-blue-500'
                       }`}
-                      placeholder="Enter your email address"
+                      placeholder="Your email"
                     />
                   </div>
                   {errors.email && (
@@ -506,7 +478,7 @@ const Contact = () => {
 
                 {/* Subject Field */}
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                     Subject *
                   </label>
                   <input
@@ -520,7 +492,7 @@ const Contact = () => {
                         ? 'border-red-300 focus:border-red-500' 
                         : 'border-gray-200 focus:border-blue-500'
                     }`}
-                    placeholder="What's this about?"
+                      placeholder="Subject"
                   />
                   {errors.subject && (
                     <motion.p
@@ -536,7 +508,7 @@ const Contact = () => {
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                     Message *
                   </label>
                   <textarea
@@ -550,7 +522,7 @@ const Contact = () => {
                         ? 'border-red-300 focus:border-red-500' 
                         : 'border-gray-200 focus:border-blue-500'
                     }`}
-                    placeholder="Tell us more about your inquiry..."
+                    placeholder="Your message..."
                   />
                   {errors.message && (
                     <motion.p
@@ -631,9 +603,9 @@ const Contact = () => {
               className="space-y-8"
             >
               <div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">Direct Team Contact</h3>
-                <p className="text-gray-600 mb-8">
-                  Reach out directly to our team members for specific inquiries or immediate assistance.
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">Team Contact</h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  Contact our team members directly.
                 </p>
               </div>
 
@@ -650,17 +622,20 @@ const Contact = () => {
                   }}
                   className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
                 >
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className={`w-16 h-16 bg-gradient-to-r ${member.gradient} rounded-full p-1`}>
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className={`w-12 h-12 bg-gradient-to-r ${member.gradient} rounded-full p-1`}>
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full rounded-full object-cover"
+                        onError={(e) => {
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random&color=fff&size=96`;
+                        }}
                       />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
-                      <p className="text-gray-600">{member.role}</p>
+                      <h4 className="text-base font-bold text-gray-900">{member.name}</h4>
+                      <p className="text-gray-600 text-sm">{member.role}</p>
                     </div>
                   </div>
 
@@ -670,6 +645,7 @@ const Contact = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      title={member.phone}
                     >
                       <PhoneIcon className="h-4 w-4 text-gray-600" />
                       <span className="text-sm text-gray-700">Call</span>
@@ -719,7 +695,7 @@ const Contact = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 bg-gradient-to-r from-blue-600/95 to-purple-600/95 backdrop-blur-sm relative z-10">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -728,12 +704,11 @@ const Contact = () => {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-white">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white">
               Ready to Explore?
             </h2>
-            <p className="text-xl text-blue-100 leading-relaxed">
-              Join us on our journey to Mars. Whether you're interested in partnerships, 
-              collaborations, or just want to learn more about our mission.
+            <p className="text-lg text-blue-100 leading-relaxed">
+              Join our Mars mission. Contact us for partnerships or collaborations.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">

@@ -96,9 +96,9 @@
   transition: all 0.3s ease;
 }
 
-/* Add smooth transitions for all interactive elements */
-* {
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+/* Add smooth transitions for interactive elements only */
+button, a, .interactive {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 /* Focus styles for accessibility */
@@ -108,11 +108,26 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* Custom styles for mobile responsiveness */
+/* Enhanced mobile responsiveness */
 @media (max-width: 640px) {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  /* Improve touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 

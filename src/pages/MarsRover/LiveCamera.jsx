@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import MarsBackground from '../../components/MarsBackground';
 import {
   CameraIcon,
   PhotoIcon,
@@ -290,7 +291,11 @@ const LiveCamera = ({ roverVersion = "1.0" }) => {
   const currentImage = currentImages[currentImageIndex] || null;
 
   return (
-    <div className="space-y-8 p-6 min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* 3D Mars Background */}
+      <MarsBackground />
+      
+      <div className="space-y-8 p-6 min-h-screen bg-gradient-to-br from-gray-900/50 via-slate-900/50 to-gray-900/50 backdrop-blur-sm relative z-10">
       {/* Enhanced Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -830,6 +835,7 @@ const LiveCamera = ({ roverVersion = "1.0" }) => {
           </div>
         </motion.div>
       </div>
+    </div>
     </div>
   );
 };

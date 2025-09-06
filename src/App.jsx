@@ -1,114 +1,123 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Suspense, lazy, useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
-import MainLayout from './components/MainLayout';
-import MarsRoverLayout from './components/MarsRover/MarsRoverLayout';
-import Dashboard from './pages/MarsRover/Dashboard';
-import LiveCamera from './pages/MarsRover/LiveCamera';
-import Navigation from './pages/MarsRover/Navigation';
-import ScienceLab from './pages/MarsRover/ScienceLab';
-import Systems from './pages/MarsRover/Systems';
-import Home from './pages/Home';
-import About from './pages/About';
-import Team from './pages/Team';
-import Achievement from './pages/Achievement';
-import MarsRover1 from './pages/MarsRover1';
-import MarsRover2 from './pages/MarsRover2';
-import Sponsor from './pages/Sponsor';
-import FAQ from './pages/FAQ';
-import Contact from './pages/Contact';
+
+// Lazy load all page components for better performance
+const MainLayout = lazy(() => import('./components/MainLayout'));
+const MarsRoverLayout = lazy(() => import('./components/MarsRover/MarsRoverLayout'));
+const Dashboard = lazy(() => import('./pages/MarsRover/Dashboard'));
+const LiveCamera = lazy(() => import('./pages/MarsRover/LiveCamera'));
+const Navigation = lazy(() => import('./pages/MarsRover/Navigation'));
+const ScienceLab = lazy(() => import('./pages/MarsRover/ScienceLab'));
+const Features = lazy(() => import('./pages/MarsRover/Features'));
+const Systems = lazy(() => import('./pages/MarsRover/Systems'));
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Team = lazy(() => import('./pages/Team'));
+const Achievement = lazy(() => import('./pages/Achievement'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Sponsor = lazy(() => import('./pages/Sponsor'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const Contact = lazy(() => import('./pages/Contact'));
+
+// Route loading component using LoadingSpinner
+const RouteLoadingSpinner = () => (
+  <LoadingSpinner 
+    isLoading={true} 
+    onLoadComplete={() => {}} 
+    isNavigation={true}
+  />
+);
 
 function AppContent() {
+
+  return (
+    <Suspense fallback={<RouteLoadingSpinner />}>
+      <Routes>
+        {/* Main Site Layout */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="team" element={<Team />} />
+          <Route path="achievement" element={<Achievement />} />
+          <Route path="gallery/:achievementId" element={<Gallery />} />
+          <Route path="sponsor" element={<Sponsor />} />
+          <Route path="faq" element={<FAQ />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+
+        {/* Mars Rover Specialized Layout - unified route */}
+        <Route path="/mars-rover-:version/*" element={<MarsRoverLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="camera" element={<LiveCamera />} />
+          <Route path="navigation" element={<Navigation />} />
+          <Route path="science" element={<ScienceLab />} />
+          <Route path="features" element={<Features />} />
+          <Route path="power" element={<Systems />} />
+          <Route path="communication" element={<Systems />} />
+          <Route path="diagnostics" element={<Systems />} />
+        </Route>
+
+        {/* Legacy route redirects */}
+        <Route path="/mars-rover-1/*" element={<MarsRoverLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="camera" element={<LiveCamera />} />
+          <Route path="navigation" element={<Navigation />} />
+          <Route path="science" element={<ScienceLab />} />
+          <Route path="features" element={<Features />} />
+          <Route path="power" element={<Systems />} />
+          <Route path="communication" element={<Systems />} />
+          <Route path="diagnostics" element={<Systems />} />
+        </Route>
+        <Route path="/mars-rover-2/*" element={<MarsRoverLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="camera" element={<LiveCamera />} />
+          <Route path="navigation" element={<Navigation />} />
+          <Route path="science" element={<ScienceLab />} />
+          <Route path="features" element={<Features />} />
+          <Route path="power" element={<Systems />} />
+          <Route path="communication" element={<Systems />} />
+          <Route path="diagnostics" element={<Systems />} />
+        </Route>
+        
+        {/* Custom route for mars-rover-1 */}
+        <Route path="/mars-rover-1/*" element={<MarsRoverLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="camera" element={<LiveCamera />} />
+          <Route path="navigation" element={<Navigation />} />
+          <Route path="science" element={<ScienceLab />} />
+          <Route path="features" element={<Features />} />
+          <Route path="power" element={<Systems />} />
+          <Route path="communication" element={<Systems />} />
+          <Route path="diagnostics" element={<Systems />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  );
+}
+
+function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isNavigating, setIsNavigating] = useState(false);
-  const location = useLocation();
 
-  // Initial app load
   useEffect(() => {
-    // Always show loading on app initialization
-    setIsLoading(true);
+    // Let the LoadingSpinner handle its own timing
+    // The LoadingSpinner will call onLoadComplete when ready
+    // This ensures the full Mars journey animation plays
   }, []);
-
-  // Handle route changes
-  useEffect(() => {
-    // Show mini loading on route changes (except initial load)
-    if (!isLoading) {
-      setIsNavigating(true);
-      const timer = setTimeout(() => {
-        setIsNavigating(false);
-      }, 800); // Shorter duration for navigation
-      
-      return () => clearTimeout(timer);
-    }
-  }, [location.pathname, isLoading]);
 
   const handleLoadComplete = () => {
     setIsLoading(false);
   };
 
-  const handleNavigationComplete = () => {
-    setIsNavigating(false);
-  };
-
-  // Show full loading spinner on initial app load
-  if (isLoading) {
-    return <LoadingSpinner isLoading={isLoading} onLoadComplete={handleLoadComplete} />;
-  }
-
-  // Show mini loading spinner on navigation
-  if (isNavigating) {
-    return <LoadingSpinner isLoading={isNavigating} onLoadComplete={handleNavigationComplete} isNavigation={true} />;
-  }
-
   return (
-    <Routes>
-      {/* Main Site Layout */}
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="team" element={<Team />} />
-        <Route path="achievement" element={<Achievement />} />
-        <Route path="sponsor" element={<Sponsor />} />
-        <Route path="faq" element={<FAQ />} />
-        <Route path="contact" element={<Contact />} />
-      </Route>
-
-      {/* Mars Rover Specialized Layout - handles both 1 and 1.0 formats */}
-      <Route path="/mars-rover-:version/*" element={<MarsRoverLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="camera" element={<LiveCamera />} />
-        <Route path="navigation" element={<Navigation />} />
-        <Route path="science" element={<ScienceLab />} />
-        <Route path="power" element={<Systems />} />
-        <Route path="communication" element={<Systems />} />
-        <Route path="diagnostics" element={<Systems />} />
-      </Route>
-
-      {/* Legacy routes for direct access */}
-      <Route path="/mars-rover-1" element={<MarsRoverLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="camera" element={<LiveCamera />} />
-        <Route path="navigation" element={<Navigation />} />
-        <Route path="science" element={<ScienceLab />} />
-        <Route path="power" element={<Systems />} />
-        <Route path="communication" element={<Systems />} />
-        <Route path="diagnostics" element={<Systems />} />
-      </Route>
-      <Route path="/mars-rover-2" element={<MarsRoverLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="camera" element={<LiveCamera />} />
-        <Route path="navigation" element={<Navigation />} />
-        <Route path="science" element={<ScienceLab />} />
-        <Route path="power" element={<Systems />} />
-        <Route path="communication" element={<Systems />} />
-        <Route path="diagnostics" element={<Systems />} />
-      </Route>
-    </Routes>
+    <>
+      <LoadingSpinner 
+        isLoading={isLoading} 
+        onLoadComplete={handleLoadComplete}
+      />
+      {!isLoading && <AppContent />}
+    </>
   );
-}
-
-function App() {
-  return <AppContent />;
 }
 
 export default App;

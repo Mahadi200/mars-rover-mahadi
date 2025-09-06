@@ -22,6 +22,13 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
   const location = useLocation();
   const dropdownRef = useRef(null);
 
+  // Determine the base path based on current location
+  const getBasePath = () => {
+    return `/mars-rover-${roverVersion}`;
+  };
+
+  const basePath = getBasePath();
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,17 +47,18 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
   };
 
   const roverNavigation = [
-    { name: 'Dashboard', href: `/mars-rover-${roverVersion}`, icon: ChartBarIcon },
-    { name: 'Live Camera', href: `/mars-rover-${roverVersion}/camera`, icon: CameraIcon },
-    { name: 'Navigation', href: `/mars-rover-${roverVersion}/navigation`, icon: MapIcon },
-    { name: 'Science Lab', href: `/mars-rover-${roverVersion}/science`, icon: BeakerIcon },
+    { name: 'Dashboard', href: basePath, icon: ChartBarIcon },
+    { name: 'Live Camera', href: `${basePath}/camera`, icon: CameraIcon },
+    { name: 'Navigation', href: `${basePath}/navigation`, icon: MapIcon },
+    { name: 'Science Lab', href: `${basePath}/science`, icon: BeakerIcon },
+    { name: 'Features', href: `${basePath}/features`, icon: CogIcon },
     { 
       name: 'Systems', 
       icon: CogIcon,
       dropdown: [
-        { name: 'Power Management', href: `/mars-rover-${roverVersion}/power`, icon: BoltIcon, description: 'Solar panels & battery status' },
-        { name: 'Communication', href: `/mars-rover-${roverVersion}/communication`, icon: GlobeAltIcon, description: 'Earth communication systems' },
-        { name: 'Diagnostics', href: `/mars-rover-${roverVersion}/diagnostics`, icon: CogIcon, description: 'System health monitoring' },
+        { name: 'Power Management', href: `${basePath}/power`, icon: BoltIcon, description: 'Solar panels & battery status' },
+        { name: 'Communication', href: `${basePath}/communication`, icon: GlobeAltIcon, description: 'Earth communication systems' },
+        { name: 'Diagnostics', href: `${basePath}/diagnostics`, icon: CogIcon, description: 'System health monitoring' },
       ]
     },
   ];
@@ -233,7 +241,7 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
               </Link>
 
               {/* Mobile: Rover navigation */}
-              {roverNavigation.map((item, index) => {
+              {roverNavigation.map((item) => {
                 const Icon = item.icon;
                 
                 if (item.dropdown) {

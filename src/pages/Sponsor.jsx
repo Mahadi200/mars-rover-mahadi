@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import MarsBackground from '../components/MarsBackground';
 import {
   BuildingOfficeIcon,
   AcademicCapIcon,
@@ -12,7 +13,8 @@ import {
   SparklesIcon,
   LightBulbIcon,
   TrophyIcon,
-  ClockIcon
+  ClockIcon,
+  SignalIcon
 } from '@heroicons/react/24/outline';
 
 const Sponsor = () => {
@@ -21,13 +23,12 @@ const Sponsor = () => {
 
   const sponsors = [
     {
-      id: 'akij-venture',
-      name: 'Akij Venture',
+      id: 'akij-dairy',
+      name: 'Akij Dairy Limited',
       type: 'Corporate Partner',
-      category: 'Technology & Innovation',
-      logo: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&auto=format&fit=crop&q=80&ixlib=rb-4.0.3',
-      description: 'Leading venture capital firm supporting innovative technology projects and space exploration initiatives.',
-      contribution: 'Primary Financial Sponsor',
+      category: 'Industry & Innovation',
+      logo: '/Images/sponsor/akij.png',
+      description: 'Akij Dairy Ltd. is a concern of the Akij Group, one of the largest conglomerates in Bangladesh. Established to ensure high-quality dairy products for consumers, the company operates with a strong focus on freshness, nutrition, and safety.',
       supportLevel: 'Platinum',
       since: '2023',
       website: '#',
@@ -51,9 +52,8 @@ const Sponsor = () => {
       name: 'South Point School & College',
       type: 'Educational Institution',
       category: 'Academic Partner',
-      logo: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&auto=format&fit=crop&q=80&ixlib=rb-4.0.3',
-      description: 'Premier educational institution fostering scientific excellence and supporting student-led research initiatives.',
-      contribution: 'Educational & Infrastructure Support',
+      logo: '/Images/sponsor/SPSC.jpg',
+      description: 'Premier educational institution fostering scientific excellence and supporting student-led research initiatives. South Point School & College provides world-class education and cutting-edge facilities for innovative projects.',
       supportLevel: 'Gold',
       since: '2022',
       website: '#',
@@ -71,27 +71,49 @@ const Sponsor = () => {
       ],
       gradient: 'from-emerald-600 to-teal-600',
       icon: AcademicCapIcon
+    },
+    {
+      id: 'fusion-net',
+      name: 'Fusion Net Limited',
+      type: 'Technology Partner',
+      category: 'Telecommunications & IT',
+      logo: '/Images/sponsor/Fusion Net .jpg',
+      description: 'Leading telecommunications and IT solutions provider supporting advanced communication systems and network infrastructure for space exploration projects. Fusion Net Limited delivers cutting-edge connectivity solutions.',
+      supportLevel: 'Gold',
+      since: '2023',
+      website: '#',
+      benefits: [
+        'Network Infrastructure',
+        'Communication Systems',
+        'Technical Support',
+        'Data Management Solutions'
+      ],
+      achievements: [
+        'Established robust communication links',
+        'Provided reliable data transmission',
+        'Enabled real-time mission monitoring',
+        'Supported remote operations'
+      ],
+      gradient: 'from-orange-600 to-red-600',
+      icon: SignalIcon
     }
   ];
 
   const sponsorshipTiers = [
     {
       tier: 'Platinum',
-      amount: '$50,000+',
       color: 'from-blue-400 to-purple-500',
       benefits: ['Logo on rover', 'Mission naming rights', 'VIP mission access', 'Technology collaboration'],
       icon: TrophyIcon
     },
     {
       tier: 'Gold',
-      amount: '$25,000+',
       color: 'from-yellow-400 to-orange-500',
       benefits: ['Mission documentation', 'Research collaboration', 'Educational partnership', 'Brand visibility'],
       icon: StarIcon
     },
     {
       tier: 'Silver',
-      amount: '$10,000+',
       color: 'from-gray-400 to-gray-600',
       benefits: ['Mission updates', 'Event invitations', 'Community recognition', 'Social media features'],
       icon: ShieldCheckIcon
@@ -99,16 +121,17 @@ const Sponsor = () => {
   ];
 
   const impactStats = [
-    { label: 'Total Funding', value: '$75,000+', icon: GiftIcon },
-    { label: 'Active Sponsors', value: '2', icon: HandRaisedIcon },
+    { label: 'Active Sponsors', value: '3', icon: HandRaisedIcon },
     { label: 'Years of Support', value: '2+', icon: ClockIcon },
-    { label: 'Innovation Projects', value: '15+', icon: LightBulbIcon }
+    { label: 'Innovation Projects', value: '20+', icon: LightBulbIcon }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* 3D Mars Background */}
+      <MarsBackground />
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-purple-900/95 via-blue-900/95 to-indigo-900/95 backdrop-blur-sm text-white relative overflow-hidden z-10">
         {/* Animated Background */}
         <div className="absolute inset-0">
           {[...Array(50)].map((_, i) => (
@@ -190,9 +213,9 @@ const Sponsor = () => {
       </section>
 
       {/* Impact Statistics */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white/90 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {impactStats.map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -226,7 +249,7 @@ const Sponsor = () => {
       </section>
 
       {/* Main Sponsors */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50/90 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -277,11 +300,12 @@ const Sponsor = () => {
                       transition={{ duration: 0.3 }}
                       className="relative mb-6"
                     >
-                      <div className="w-full h-48 rounded-2xl overflow-hidden mb-4">
+                      <div className="w-full h-64 rounded-2xl overflow-hidden mb-4 bg-white p-4 shadow-inner">
                         <img
                           src={sponsor.logo}
                           alt={sponsor.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 filter brightness-100 contrast-110"
+                          style={{ imageRendering: 'crisp-edges' }}
                         />
                       </div>
                       
@@ -322,12 +346,8 @@ const Sponsor = () => {
                         {sponsor.description}
                       </p>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-500">Contribution</p>
-                          <p className="font-semibold text-gray-900">{sponsor.contribution}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="bg-gray-50 p-3 rounded-lg text-center">
                           <p className="text-sm text-gray-500">Partner Since</p>
                           <p className="font-semibold text-gray-900">{sponsor.since}</p>
                         </div>
@@ -378,7 +398,7 @@ const Sponsor = () => {
       </section>
 
       {/* Sponsorship Tiers */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/80 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -420,10 +440,7 @@ const Sponsor = () => {
                     <Icon className="h-10 w-10 text-white" />
                   </motion.div>
                   
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{tier.tier}</h3>
-                  <p className={`text-3xl font-bold bg-gradient-to-r ${tier.color} bg-clip-text text-transparent mb-6`}>
-                    {tier.amount}
-                  </p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">{tier.tier}</h3>
                   
                   <div className="space-y-3">
                     {tier.benefits.map((benefit, idx) => (
@@ -448,7 +465,7 @@ const Sponsor = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
+      <section className="py-20 bg-gradient-to-r from-purple-600/95 to-pink-600/95 backdrop-blur-sm relative z-10">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -502,11 +519,12 @@ const Sponsor = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-center mb-8">
-                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6">
+                <div className="w-full h-64 rounded-2xl overflow-hidden mb-6 bg-white p-6 shadow-inner">
                   <img
                     src={selectedSponsor.logo}
                     alt={selectedSponsor.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 filter brightness-100 contrast-110"
+                    style={{ imageRendering: 'crisp-edges' }}
                   />
                 </div>
                 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import * as THREE from 'three';
 import { 
   HomeIcon, 
@@ -15,11 +15,20 @@ import {
   ChartBarIcon,
   CameraIcon,
   BeakerIcon,
-  StarIcon
+  StarIcon,
+  CogIcon
 } from '@heroicons/react/24/outline';
 
 const Footer = () => {
   const canvasRef = useRef(null);
+  const location = useLocation();
+  
+  // Check if we're in Mars Rover layout
+  const isMarsRoverLayout = location.pathname.includes('/mars-rover-');
+  
+  // Extract rover version from path if in Mars Rover layout
+  const roverVersionMatch = location.pathname.match(/mars-rover-(\d+(?:\.\d+)?)/);
+  const roverVersion = roverVersionMatch ? roverVersionMatch[1] : "1";
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -145,6 +154,7 @@ const Footer = () => {
     };
   }, []);
 
+  // Navigation section - Always shows main navbar links
   const navLinks = [
     { name: 'Home', href: '/', icon: HomeIcon },
     { name: 'About', href: '/about', icon: InformationCircleIcon },
@@ -152,15 +162,19 @@ const Footer = () => {
     { name: 'Achievement', href: '/achievement', icon: TrophyIcon },
     { name: 'Mars Rover 1.0', href: '/mars-rover-1', icon: RocketLaunchIcon },
     { name: 'Mars Rover 2.0', href: '/mars-rover-2', icon: RocketLaunchIcon },
+    { name: 'Sponsor', href: '/sponsor', icon: HeartIcon },
+    { name: 'FAQ', href: '/faq', icon: QuestionMarkCircleIcon },
+    { name: 'Contact Us', href: '/contact', icon: PhoneIcon },
   ];
 
+  // Quick Access section - Always shows Mars Rover navigation
   const quickLinks = [
-    { name: 'Mission Status', href: '#', icon: ChartBarIcon },
-    { name: 'Live Feed', href: '#', icon: CameraIcon },
-    { name: 'Mars Weather', href: '#', icon: GlobeAltIcon },
-    { name: 'Rover Tracking', href: '#', icon: MapIcon },
-    { name: 'Research Data', href: '#', icon: BeakerIcon },
-    { name: 'Gallery', href: '#', icon: StarIcon },
+    { name: 'Dashboard', href: `/mars-rover-${roverVersion}`, icon: ChartBarIcon },
+    { name: 'Live Camera', href: `/mars-rover-${roverVersion}/camera`, icon: CameraIcon },
+    { name: 'Navigation', href: `/mars-rover-${roverVersion}/navigation`, icon: MapIcon },
+    { name: 'Science Lab', href: `/mars-rover-${roverVersion}/science`, icon: BeakerIcon },
+    { name: 'Features', href: `/mars-rover-${roverVersion}/features`, icon: CogIcon },
+    { name: 'Systems', href: `/mars-rover-${roverVersion}/power`, icon: GlobeAltIcon },
   ];
 
   const marsInfo = [
@@ -171,16 +185,16 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-gray-900 text-white overflow-hidden">
+    <footer className={`relative ${isMarsRoverLayout ? 'bg-gradient-to-br from-red-950 via-orange-950 to-amber-950' : 'bg-gray-900'} text-white overflow-hidden`}>
       {/* 3D Mars Animation Background */}
       <canvas 
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full opacity-30"
+        className={`absolute top-0 left-0 w-full h-full ${isMarsRoverLayout ? 'opacity-40' : 'opacity-30'}`}
         style={{ height: '100%' }}
       />
       
       {/* Footer Content */}
-      <div className="relative z-10 bg-gradient-to-r from-gray-900/90 via-red-900/20 to-gray-900/90">
+      <div className={`relative z-10 ${isMarsRoverLayout ? 'bg-gradient-to-r from-red-950/95 via-orange-950/80 to-amber-950/95' : 'bg-gradient-to-r from-gray-900/90 via-red-900/20 to-gray-900/90'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             
@@ -231,22 +245,34 @@ const Footer = () => {
             {/* Quick Links */}
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-orange-400 border-b border-orange-400/30 pb-2">
-                Quick Access
+                Mars Rover Navigation
               </h4>
               <ul className="space-y-3">
                 {quickLinks.map((link) => {
                   const Icon = link.icon;
                   return (
                     <li key={link.name}>
-                      <a 
-                        href={link.href}
-                        className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
-                      >
-                        <Icon className="h-4 w-4 text-orange-400 group-hover:text-orange-300 transition-colors" />
-                        <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
-                          {link.name}
-                        </span>
-                      </a>
+                      {link.href.startsWith('#') ? (
+                        <a 
+                          href={link.href}
+                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
+                        >
+                          <Icon className="h-4 w-4 text-orange-400 group-hover:text-orange-300 transition-colors" />
+                          <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
+                            {link.name}
+                          </span>
+                        </a>
+                      ) : (
+                        <Link 
+                          to={link.href}
+                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
+                        >
+                          <Icon className="h-4 w-4 text-orange-400 group-hover:text-orange-300 transition-colors" />
+                          <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
+                            {link.name}
+                          </span>
+                        </Link>
+                      )}
                     </li>
                   );
                 })}
@@ -304,9 +330,14 @@ const Footer = () => {
                 </span>
                 <div className="flex items-center space-x-2">
                   <StarIcon className="h-4 w-4 text-yellow-400 animate-spin" style={{ animationDuration: '3s' }} />
-                  <span className="text-sm font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                  <a 
+                    href="https://www.dreamsofbangladesh.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-300 hover:scale-105"
+                  >
                     Dreams of Bangladesh
-                  </span>
+                  </a>
                   <StarIcon className="h-4 w-4 text-yellow-400 animate-spin" style={{ animationDuration: '3s', animationDirection: 'reverse' }} />
                 </div>
               </div>
