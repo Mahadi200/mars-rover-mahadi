@@ -7,16 +7,20 @@ import {
   TrophyIcon,
   SparklesIcon,
   FireIcon,
-  ArrowRightIcon,
   PhotoIcon,
   EyeIcon,
   CalendarIcon,
-  MapPinIcon
+  MapPinIcon,
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
 
 const Achievement = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
+
+  const handleGalleryClick = () => {
+    navigate('/gallery');
+  };
 
   const achievements = [
     {
@@ -77,31 +81,6 @@ const Achievement = () => {
     }
   ];
 
-  const handleExploreClick = (achievement) => {
-    // Navigate to gallery page with achievement data (excluding non-serializable objects)
-    const serializableAchievement = {
-      id: achievement.id,
-      title: achievement.title,
-      shortTitle: achievement.shortTitle,
-      description: achievement.description,
-      gradient: achievement.gradient,
-      glowColor: achievement.glowColor,
-      imageCount: achievement.imageCount,
-      imagePrefix: achievement.imagePrefix,
-      date: achievement.date,
-      location: achievement.location,
-      category: achievement.category,
-      skills: achievement.skills,
-      achievements: achievement.achievements,
-      specialty: achievement.specialty
-    };
-    
-    navigate(`/gallery/${achievement.id}`, { 
-      state: { 
-        achievement: serializableAchievement 
-      } 
-    });
-  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -315,9 +294,9 @@ const Achievement = () => {
                         </div>
                       </div>
 
-                      {/* Explorer Button */}
+                      {/* Gallery View Button */}
                       <motion.button
-                        onClick={() => handleExploreClick(achievement)}
+                        onClick={handleGalleryClick}
                         whileHover={{ 
                           scale: 1.05, 
                           boxShadow: `0 20px 40px ${achievement.glowColor}` 
@@ -333,9 +312,10 @@ const Achievement = () => {
                           transition={{ duration: 0.6 }}
                         />
                         
-                        <span className="relative z-10">Explore Gallery</span>
+                        <span className="relative z-10">Gallery View</span>
                         <ArrowRightIcon className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                       </motion.button>
+
                     </div>
 
                     {/* Floating Elements */}

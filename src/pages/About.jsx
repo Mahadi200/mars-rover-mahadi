@@ -502,19 +502,22 @@ const About = () => {
               transition={{ delay: 1.5, duration: 0.8 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             >
-              <motion.button
+              <motion.a
+                href="https://mars.nasa.gov/mars2020/"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ 
                   scale: 1.1, 
                   boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5), 0 0 50px rgba(59, 130, 246, 0.3)" 
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="group px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold text-lg rounded-2xl transition-all duration-500 flex items-center space-x-3 shadow-2xl shadow-blue-600/50 relative overflow-hidden"
+                className="group px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold text-lg rounded-2xl transition-all duration-500 flex items-center space-x-3 shadow-2xl shadow-blue-600/50 relative overflow-hidden focus:outline-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                 <RocketLaunchIcon className="h-6 w-6 group-hover:animate-bounce relative z-10" />
-                <span className="relative z-10">Launch Mission Control</span>
+                <span className="relative z-10">Initialize Mars Mission</span>
                 <FireIcon className="h-5 w-5 group-hover:text-orange-300 transition-colors relative z-10" />
-              </motion.button>
+              </motion.a>
               
               <motion.button
                 whileHover={{ 
@@ -1049,13 +1052,16 @@ const About = () => {
                   that will shape our multi-planetary future through our revolutionary Mars Rover mission control.
                 </p>
                 
-                <motion.button
+                <motion.a
+                  href="https://mars.nasa.gov/mars2020/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ 
                     scale: 1.1,
                     boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5), 0 0 100px rgba(59, 130, 246, 0.3)"
                   }}
                   whileTap={{ scale: 0.95 }}
-                  className="group inline-flex items-center space-x-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-12 py-6 rounded-3xl font-bold text-xl hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 transition-all duration-500 shadow-2xl shadow-blue-600/30 relative overflow-hidden"
+                  className="group inline-flex items-center space-x-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-12 py-6 rounded-3xl font-bold text-xl hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 transition-all duration-500 shadow-2xl shadow-blue-600/30 relative overflow-hidden focus:outline-none"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   <RocketLaunchIcon className="h-8 w-8 group-hover:animate-bounce relative z-10" />
@@ -1067,7 +1073,7 @@ const About = () => {
                   >
                     <SparklesIcon className="h-6 w-6" />
                   </motion.div>
-                </motion.button>
+                </motion.a>
               </div>
             </motion.div>
           </motion.div>

@@ -40,7 +40,7 @@ function AppContent() {
           <Route path="about" element={<About />} />
           <Route path="team" element={<Team />} />
           <Route path="achievement" element={<Achievement />} />
-          <Route path="gallery/:achievementId" element={<Gallery />} />
+          <Route path="gallery" element={<Gallery />} />
           <Route path="sponsor" element={<Sponsor />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="contact" element={<Contact />} />

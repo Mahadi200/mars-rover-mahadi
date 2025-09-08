@@ -19,15 +19,17 @@ const Navbar = () => {
   const [isMarsRoverDropdownOpen, setIsMarsRoverDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
-  // Handle scroll effect for navbar transparency
+  // Handle scroll effect for navbar transparency and scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 50);
+      setShowScrollToTop(scrollPosition > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -54,18 +56,32 @@ const Navbar = () => {
     setIsMarsRoverDropdownOpen(false);
   }, [location]);
 
-  // Handle navigation with loading
+  // Handle navigation with loading and smooth scroll
   const handleNavigation = (href) => {
     if (location.pathname !== href) {
       setIsLoading(true);
       setIsMobileMenuOpen(false);
       setIsMarsRoverDropdownOpen(false);
       
+      // Scroll to top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      
       // Simulate loading time
       setTimeout(() => {
         navigate(href);
         setIsLoading(false);
       }, 500);
+    } else {
+      // If already on the same page, just scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      setIsMobileMenuOpen(false);
+      setIsMarsRoverDropdownOpen(false);
     }
   };
 
@@ -130,7 +146,7 @@ const Navbar = () => {
                   className="h-10 w-auto mr-3 hover:scale-105 transition-transform duration-300"
                 />
                 <span className="text-white text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-                  Mars Rover
+                  TararBari
                 </span>
               </Link>
             </div>
@@ -145,11 +161,11 @@ const Navbar = () => {
                       <div key={item.name} className="relative" ref={dropdownRef}>
                         <button
                           onClick={() => setIsMarsRoverDropdownOpen(!isMarsRoverDropdownOpen)}
-                                                  className={`${
-                          isDropdownActive(item.dropdown)
-                            ? 'text-white'
-                            : 'text-gray-300 hover:text-white'
-                        } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group`}
+                          className={`${
+                            isDropdownActive(item.dropdown)
+                              ? 'text-white'
+                              : 'text-gray-300 hover:text-white'
+                          } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group`}
                         >
                           <Icon className="h-4 w-4 mr-1 group-hover:scale-110 transition-transform duration-300" />
                           {item.name}
@@ -214,11 +230,11 @@ const Navbar = () => {
             <div className="sm:hidden flex items-center ml-2">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-all duration-300"
-                aria-expanded="false"
-                aria-label="Toggle navigation menu"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-all duration-300 min-w-[44px] min-h-[44px]"
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               >
-                <span className="sr-only">Open main menu</span>
+                <span className="sr-only">{isMobileMenuOpen ? "Close main menu" : "Open main menu"}</span>
                 {isMobileMenuOpen ? (
                   <XMarkIcon className="h-6 w-6 transform rotate-0 transition-transform duration-300" />
                 ) : (
@@ -240,7 +256,7 @@ const Navbar = () => {
               ? 'bg-gray-900/90 backdrop-blur-lg border-t border-gray-700/50' 
               : 'bg-gray-900 border-t border-gray-800'
           } transition-all duration-300`}>
-            <div className="pt-2 pb-3 space-y-1">
+            <div className="pt-2 pb-4 space-y-1 max-h-[80vh] overflow-y-auto custom-scrollbar">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 
@@ -284,7 +300,7 @@ const Navbar = () => {
                               isActive(dropdownItem.href)
                                 ? 'bg-indigo-900 text-indigo-100'
                                 : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                            } block px-4 py-3 rounded-md text-sm transition-all duration-300 w-full text-left focus:outline-none focus:bg-gray-800`}
+                            } px-4 py-3 rounded-md text-sm transition-all duration-300 w-full text-left focus:outline-none focus:bg-gray-800 min-h-[44px] flex flex-col justify-center`}
                           >
                             <div className="font-medium">{dropdownItem.name}</div>
                             {dropdownItem.description && (
@@ -305,11 +321,11 @@ const Navbar = () => {
                       isActive(item.href)
                         ? 'bg-gray-800 text-white underline decoration-indigo-400 decoration-2 underline-offset-4'
                         : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:underline hover:decoration-white hover:decoration-1 hover:underline-offset-4'
-                    } block px-3 py-3 rounded-md mx-2 text-base font-medium transition-all duration-300 transform hover:translate-x-2 focus:outline-none focus:underline focus:decoration-indigo-400 focus:decoration-2 focus:underline-offset-4 w-full text-left`}
+                    } px-3 py-4 rounded-md mx-2 text-base font-medium transition-all duration-300 transform hover:translate-x-2 focus:outline-none focus:underline focus:decoration-indigo-400 focus:decoration-2 focus:underline-offset-4 w-full text-left min-h-[48px] flex items-center`}
                   >
                     <div className="flex items-center">
-                      <Icon className="h-5 w-5 mr-3" />
-                      {item.name}
+                      <Icon className="h-5 w-5 mr-3 flex-shrink-0" />
+                      <span className="flex-1">{item.name}</span>
                     </div>
                   </button>
                 );
@@ -318,6 +334,19 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      {/* Scroll to Top Button */}
+      {showScrollToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-50 bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          aria-label="Scroll to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
 
       <style jsx>{`
         @keyframes fadeIn {

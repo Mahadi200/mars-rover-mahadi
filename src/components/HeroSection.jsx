@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   RocketLaunchIcon,
   GlobeAltIcon,
@@ -220,23 +221,27 @@ const HeroSection = () => {
                 transition={{ delay: 0.6 }}
                 className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
               >
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/25 w-full sm:w-auto"
-                >
-                  <RocketLaunchIcon className="h-5 w-5 group-hover:animate-bounce" />
-                  <span>Explore Mars Rover</span>
-                </motion.button>
+                <Link to="/mars-rover-1">
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5)" }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/25 w-full sm:w-auto focus:outline-none"
+                  >
+                    <RocketLaunchIcon className="h-5 w-5 group-hover:animate-bounce" />
+                    <span>Explore Mars Rover</span>
+                  </motion.button>
+                </Link>
                 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2 w-full sm:w-auto"
-                >
-                  <PlayIcon className="h-5 w-5 group-hover:text-cyan-400 transition-colors" />
-                  <span>Watch Mission</span>
-                </motion.button>
+                <Link to="/mars-rover-1/camera">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2 w-full sm:w-auto focus:outline-none"
+                  >
+                    <PlayIcon className="h-5 w-5 group-hover:text-cyan-400 transition-colors" />
+                    <span>Watch Mission</span>
+                  </motion.button>
+                </Link>
               </motion.div>
             </motion.div>
           </AnimatePresence>

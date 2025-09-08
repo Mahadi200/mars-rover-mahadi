@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { 
-  HomeIcon,
   ArrowLeftIcon,
   CogIcon,
   ChartBarIcon,
@@ -9,18 +8,13 @@ import {
   MapIcon,
   BeakerIcon,
   RocketLaunchIcon,
-  BoltIcon,
-  GlobeAltIcon,
   Bars3Icon,
-  XMarkIcon,
-  ChevronDownIcon
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSystemsDropdownOpen, setIsSystemsDropdownOpen] = useState(false);
   const location = useLocation();
-  const dropdownRef = useRef(null);
 
   // Determine the base path based on current location
   const getBasePath = () => {
@@ -29,21 +23,8 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
 
   const basePath = getBasePath();
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsSystemsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-    setIsSystemsDropdownOpen(false);
   };
 
   const roverNavigation = [
@@ -52,24 +33,13 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
     { name: 'Navigation', href: `${basePath}/navigation`, icon: MapIcon },
     { name: 'Science Lab', href: `${basePath}/science`, icon: BeakerIcon },
     { name: 'Features', href: `${basePath}/features`, icon: CogIcon },
-    { 
-      name: 'Systems', 
-      icon: CogIcon,
-      dropdown: [
-        { name: 'Power Management', href: `${basePath}/power`, icon: BoltIcon, description: 'Solar panels & battery status' },
-        { name: 'Communication', href: `${basePath}/communication`, icon: GlobeAltIcon, description: 'Earth communication systems' },
-        { name: 'Diagnostics', href: `${basePath}/diagnostics`, icon: CogIcon, description: 'System health monitoring' },
-      ]
-    },
+    { name: 'Systems', href: `${basePath}/power`, icon: CogIcon },
   ];
 
   const isActive = (path) => {
     return location.pathname === path;
   };
 
-  const isDropdownActive = (dropdown) => {
-    return dropdown.some(item => location.pathname === item.href);
-  };
 
   const getRoverDisplayName = () => {
     return `Mars Rover ${formattedVersion}`;
@@ -133,56 +103,6 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
               {roverNavigation.map((item) => {
                 const Icon = item.icon;
                 
-                if (item.dropdown) {
-                  return (
-                    <div key={item.name} className="relative" ref={dropdownRef}>
-                      <button
-                        onClick={() => setIsSystemsDropdownOpen(!isSystemsDropdownOpen)}
-                        className={`${
-                          isDropdownActive(item.dropdown)
-                            ? 'text-white'
-                            : 'text-gray-300 hover:text-white'
-                        } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group`}
-                      >
-                        <Icon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                        {item.name}
-                        <ChevronDownIcon className={`h-4 w-4 ml-1 transition-transform duration-300 ${isSystemsDropdownOpen ? 'rotate-180' : ''}`} />
-                      </button>
-                      
-                      {isSystemsDropdownOpen && (
-                        <div className="absolute top-full right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-xl py-3 z-50 border border-gray-600 backdrop-blur-sm bg-opacity-95">
-                          <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wide border-b border-gray-700">
-                            Rover Systems
-                          </div>
-                          {item.dropdown.map((dropdownItem) => {
-                            const DropdownIcon = dropdownItem.icon;
-                            return (
-                              <Link
-                                key={dropdownItem.name}
-                                to={dropdownItem.href}
-                                onClick={() => setIsSystemsDropdownOpen(false)}
-                                className={`${
-                                  isActive(dropdownItem.href)
-                                    ? 'bg-red-900 text-red-100 border-l-4 border-red-400'
-                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white border-l-4 border-transparent'
-                                } block px-4 py-4 transition-all duration-300 group/item`}
-                              >
-                                <div className="flex items-start space-x-3">
-                                  <DropdownIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                                  <div>
-                                    <div className="font-medium">{dropdownItem.name}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{dropdownItem.description}</div>
-                                  </div>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-                
                 return (
                   <Link
                     key={item.name}
@@ -191,7 +111,7 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
                       isActive(item.href)
                         ? `text-white border-b-2 ${getAccentColor()}`
                         : 'text-gray-300 hover:text-white'
-                    } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group relative pb-1`}
+                    } inline-flex items-center text-sm font-medium transition-all duration-300 ease-out group relative pb-1 focus:outline-none`}
                   >
                     <Icon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
                     {item.name}
@@ -204,7 +124,7 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
             <div className="sm:hidden flex items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500 transition-all duration-300"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none transition-all duration-300"
                 aria-expanded="false"
                 aria-label="Toggle rover navigation menu"
               >
@@ -232,7 +152,7 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
               <Link
                 to="/"
                 onClick={closeMobileMenu}
-                className="block pl-3 pr-4 py-3 border-l-4 border-gray-600 text-gray-300 hover:text-white hover:border-white transition-all duration-200"
+                className="block pl-3 pr-4 py-3 border-l-4 border-gray-600 text-gray-300 hover:text-white hover:border-white transition-all duration-200 focus:outline-none"
               >
                 <div className="flex items-center">
                   <ArrowLeftIcon className="h-5 w-5 mr-3" />
@@ -244,53 +164,6 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
               {roverNavigation.map((item) => {
                 const Icon = item.icon;
                 
-                if (item.dropdown) {
-                  return (
-                    <div key={item.name}>
-                      <button
-                        onClick={() => setIsSystemsDropdownOpen(!isSystemsDropdownOpen)}
-                        className="w-full text-left pl-3 pr-4 py-3 border-l-4 border-transparent text-gray-300 hover:text-white hover:border-red-500 transition-all duration-200"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <Icon className="h-5 w-5 mr-3" />
-                            {item.name}
-                          </div>
-                          <ChevronDownIcon className={`h-4 w-4 transition-transform duration-200 ${
-                            isSystemsDropdownOpen ? 'rotate-180' : ''
-                          }`} />
-                        </div>
-                      </button>
-                      
-                      <div className={`ml-4 space-y-1 transition-all duration-300 bg-gray-900 rounded-md mr-4 ${
-                        isSystemsDropdownOpen 
-                          ? 'max-h-60 opacity-100 py-2' 
-                          : 'max-h-0 opacity-0 overflow-hidden'
-                      }`}>
-                        {item.dropdown.map((dropdownItem) => {
-                          const DropdownIcon = dropdownItem.icon;
-                          return (
-                            <Link
-                              key={dropdownItem.name}
-                              to={dropdownItem.href}
-                              onClick={closeMobileMenu}
-                              className="block pl-4 pr-4 py-3 text-sm text-gray-300 hover:text-white transition-all duration-200 mx-2 rounded"
-                            >
-                              <div className="flex items-center">
-                                <DropdownIcon className="h-4 w-4 mr-3" />
-                                <div>
-                                  <div className="font-medium">{dropdownItem.name}</div>
-                                  <div className="text-xs text-gray-500 mt-1">{dropdownItem.description}</div>
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                }
-                
                 return (
                   <Link
                     key={item.name}
@@ -300,7 +173,7 @@ const MarsRoverNavbar = ({ roverVersion = "1", formattedVersion = "1.0" }) => {
                       isActive(item.href)
                         ? 'border-red-500 text-white bg-gray-900'
                         : 'border-transparent text-gray-300 hover:text-white hover:border-red-500'
-                    } block pl-3 pr-4 py-3 border-l-4 transition-all duration-200`}
+                    } block pl-3 pr-4 py-3 border-l-4 transition-all duration-200 focus:outline-none`}
                   >
                     <div className="flex items-center">
                       <Icon className="h-5 w-5 mr-3" />

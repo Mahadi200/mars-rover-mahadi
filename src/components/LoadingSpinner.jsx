@@ -327,7 +327,7 @@ const LoadingSpinner = ({ isLoading, onLoadComplete, isNavigation = false }) => 
                   repeat: Infinity
                 }}
               >
-                Mars Rover
+               Tarar Bari
               </motion.h1>
 
               <motion.p

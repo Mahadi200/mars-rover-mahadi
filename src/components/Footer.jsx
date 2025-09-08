@@ -30,6 +30,15 @@ const Footer = () => {
   const roverVersionMatch = location.pathname.match(/mars-rover-(\d+(?:\.\d+)?)/);
   const roverVersion = roverVersionMatch ? roverVersionMatch[1] : "1";
 
+  // Handle navigation with smooth scroll to top
+  const handleFooterNavigation = (href) => {
+    // Scroll to top smoothly
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -229,7 +238,8 @@ const Footer = () => {
                     <li key={link.name}>
                       <Link 
                         to={link.href}
-                        className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
+                        onClick={() => handleFooterNavigation(link.href)}
+                        className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group focus:outline-none"
                       >
                         <Icon className="h-4 w-4 text-red-400 group-hover:text-red-300 transition-colors" />
                         <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
@@ -255,7 +265,8 @@ const Footer = () => {
                       {link.href.startsWith('#') ? (
                         <a 
                           href={link.href}
-                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
+                          onClick={() => handleFooterNavigation(link.href)}
+                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group focus:outline-none"
                         >
                           <Icon className="h-4 w-4 text-orange-400 group-hover:text-orange-300 transition-colors" />
                           <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
@@ -265,7 +276,8 @@ const Footer = () => {
                       ) : (
                         <Link 
                           to={link.href}
-                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group"
+                          onClick={() => handleFooterNavigation(link.href)}
+                          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 group focus:outline-none"
                         >
                           <Icon className="h-4 w-4 text-orange-400 group-hover:text-orange-300 transition-colors" />
                           <span className="text-sm group-hover:translate-x-1 transition-transform duration-300">
@@ -309,13 +321,13 @@ const Footer = () => {
               </div>
               
               <div className="flex items-center space-x-6">
-                <Link to="/contact" className="text-sm text-gray-400 hover:text-red-400 transition-colors">
+                <Link to="/contact" onClick={() => handleFooterNavigation('/contact')} className="text-sm text-gray-400 hover:text-red-400 transition-colors focus:outline-none">
                   Contact Us
                 </Link>
-                <Link to="/faq" className="text-sm text-gray-400 hover:text-red-400 transition-colors">
+                <Link to="/faq" onClick={() => handleFooterNavigation('/faq')} className="text-sm text-gray-400 hover:text-red-400 transition-colors focus:outline-none">
                   FAQ
                 </Link>
-                <Link to="/sponsor" className="text-sm text-gray-400 hover:text-red-400 transition-colors">
+                <Link to="/sponsor" onClick={() => handleFooterNavigation('/sponsor')} className="text-sm text-gray-400 hover:text-red-400 transition-colors focus:outline-none">
                   Sponsors
                 </Link>
               </div>
@@ -334,7 +346,7 @@ const Footer = () => {
                     href="https://www.dreamsofbangladesh.com" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-sm font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-300 hover:scale-105"
+                    className="text-sm font-bold bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-300 hover:scale-105 focus:outline-none"
                   >
                     Dreams of Bangladesh
                   </a>

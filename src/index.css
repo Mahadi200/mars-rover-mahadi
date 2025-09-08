@@ -108,6 +108,60 @@ a:focus {
   outline-offset: 2px;
 }
 
+/* Remove focus outline for footer links specifically */
+footer a:focus,
+footer button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Remove focus outline for Mars Rover layout elements */
+nav a:focus,
+nav button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure proper layout for footer positioning */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content should take available space */
+main {
+  flex: 1;
+}
+
+/* Smooth scroll to top animation */
+@keyframes scrollToTop {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+.scroll-to-top {
+  animation: scrollToTop 0.6s ease-in-out;
+}
+
+
+/* Tablet responsiveness */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 /* Enhanced mobile responsiveness */
 @media (max-width: 640px) {
   .container {

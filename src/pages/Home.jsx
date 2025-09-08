@@ -14,7 +14,23 @@ import {
   GlobeAltIcon,
   SparklesIcon,
   ArrowRightIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  CommandLineIcon,
+  ChartBarIcon,
+  CpuChipIcon,
+  SignalIcon,
+  WrenchScrewdriverIcon,
+  DocumentChartBarIcon,
+  MapIcon,
+  EyeIcon,
+  AcademicCapIcon,
+  StarIcon,
+  BoltIcon,
+  ShieldCheckIcon,
+  CogIcon,
+  FireIcon,
+  HeartIcon,
+  LightBulbIcon
 } from '@heroicons/react/24/outline';
 
 // Simple loading component for lazy components
@@ -28,58 +44,64 @@ const Home = () => {
 
   const features = [
     {
-      icon: RocketLaunchIcon,
+      icon: CommandLineIcon,
       title: "Mission Control",
-      description: "Real-time monitoring and control of Mars Rover operations with advanced telemetry data.",
+      description: "Real-time monitoring and control of Mars Rover operations with advanced telemetry data and AI-powered command systems.",
       link: "/mars-rover-1",
       color: "from-red-500 to-orange-500",
       bgColor: "bg-red-500/10",
-      borderColor: "border-red-500/30"
+      borderColor: "border-red-500/30",
+      badge: "Live"
     },
     {
       icon: TrophyIcon,
       title: "Achievements",
-      description: "Groundbreaking discoveries and milestones in Mars Rover exploration and scientific research.",
+      description: "Groundbreaking discoveries and milestones in Mars Rover exploration and scientific research achievements.",
       link: "/achievement",
       color: "from-amber-500 to-yellow-500",
       bgColor: "bg-amber-500/10",
-      borderColor: "border-amber-500/30"
+      borderColor: "border-amber-500/30",
+      badge: "Award"
     },
     {
-      icon: UsersIcon,
+      icon: AcademicCapIcon,
       title: "Expert Team",
       description: "Meet the brilliant scientists, engineers, and researchers driving Mars Rover exploration forward.",
       link: "/team",
       color: "from-blue-500 to-cyan-500",
       bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/30"
+      borderColor: "border-blue-500/30",
+      badge: "Team"
     },
     {
       icon: BeakerIcon,
       title: "Science Lab",
-      description: "Advanced laboratory analysis with quantum instruments and AI-powered discoveries.",
+      description: "Advanced laboratory analysis with quantum instruments and AI-powered discoveries on Mars.",
       link: "/mars-rover-1/science",
       color: "from-purple-500 to-pink-500",
       bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/30"
+      borderColor: "border-purple-500/30",
+      badge: "Research"
     },
     {
       icon: CameraIcon,
       title: "Live Camera",
-      description: "High-resolution imagery and real-time visual data from the Mars Rover surface.",
+      description: "High-resolution imagery and real-time visual data from the Mars Rover surface exploration.",
       link: "/mars-rover-1/camera",
       color: "from-emerald-500 to-teal-500",
       bgColor: "bg-emerald-500/10",
-      borderColor: "border-emerald-500/30"
+      borderColor: "border-emerald-500/30",
+      badge: "Live Feed"
     },
     {
-      icon: GlobeAltIcon,
+      icon: MapIcon,
       title: "Navigation",
-      description: "Precision navigation systems with autonomous pathfinding and obstacle detection.",
+      description: "Precision navigation systems with autonomous pathfinding and obstacle detection technology.",
       link: "/mars-rover-1/navigation",
       color: "from-indigo-500 to-purple-500",
       bgColor: "bg-indigo-500/10",
-      borderColor: "border-indigo-500/30"
+      borderColor: "border-indigo-500/30",
+      badge: "GPS"
     }
   ];
 
@@ -87,22 +109,30 @@ const Home = () => {
     {
       number: "2,547",
       label: "Sols on Mars Rover",
-      description: "Days of successful operation"
+      description: "Days of successful operation",
+      icon: StarIcon,
+      color: "from-cyan-400 to-blue-400"
     },
     {
       number: "47.2",
       label: "Kilometers",
-      description: "Distance traveled on surface"
+      description: "Distance traveled on surface",
+      icon: MapIcon,
+      color: "from-emerald-400 to-teal-400"
     },
     {
       number: "15,823",
       label: "Images",
-      description: "High-resolution photos captured"
+      description: "High-resolution photos captured",
+      icon: CameraIcon,
+      color: "from-purple-400 to-pink-400"
     },
     {
       number: "1,247",
       label: "Samples",
-      description: "Scientific specimens analyzed"
+      description: "Scientific specimens analyzed",
+      icon: BeakerIcon,
+      color: "from-orange-400 to-red-400"
     }
   ];
 
@@ -292,8 +322,15 @@ const Home = () => {
                   {/* Animated Background Gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                   
+                  {/* Badge */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${feature.color} text-white shadow-lg`}>
+                      {feature.badge}
+                    </span>
+                  </div>
+
                   {/* Icon */}
-                  <div className={`relative z-10 ${feature.bgColor} w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`relative z-10 ${feature.bgColor} w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:rotate-6`}>
                     <Icon className={`h-6 w-6 sm:h-8 sm:w-8 bg-gradient-to-r ${feature.color} bg-clip-text text-transparent`} />
                   </div>
 
@@ -364,35 +401,43 @@ const Home = () => {
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-            {missionHighlights.map((highlight, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="text-center group"
-              >
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ duration: 0.8, delay: index * 0.2, type: "spring" }}
-                    viewport={{ once: true }}
-                    className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-1 sm:mb-2"
-                  >
-                    {highlight.number}
-                  </motion.div>
-                  <div className="text-sm sm:text-lg font-semibold text-white mb-1">
-                    {highlight.label}
+            {missionHighlights.map((highlight, index) => {
+              const Icon = highlight.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="text-center group"
+                >
+                  <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300 relative overflow-hidden">
+                    {/* Icon */}
+                    <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-300">
+                      <Icon className={`h-6 w-6 sm:h-8 sm:w-8 bg-gradient-to-r ${highlight.color} bg-clip-text text-transparent`} />
+                    </div>
+                    
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ duration: 0.8, delay: index * 0.2, type: "spring" }}
+                      viewport={{ once: true }}
+                      className={`text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${highlight.color} bg-clip-text text-transparent mb-1 sm:mb-2`}
+                    >
+                      {highlight.number}
+                    </motion.div>
+                    <div className="text-sm sm:text-lg font-semibold text-white mb-1">
+                      {highlight.label}
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-400">
+                      {highlight.description}
+                    </div>
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-400">
-                    {highlight.description}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -446,7 +491,7 @@ const Home = () => {
               >
                 <Link
                   to="/mars-rover-1"
-                  className="group inline-flex items-center space-x-2 sm:space-x-3 bg-white text-red-600 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300 shadow-xl shadow-black/20"
+                  className="group inline-flex items-center space-x-2 sm:space-x-3 bg-white text-red-600 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300 shadow-xl shadow-black/20 focus:outline-none"
                 >
                   <RocketLaunchIcon className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-bounce" />
                   <span>Start Exploring</span>
@@ -460,9 +505,9 @@ const Home = () => {
               >
                 <Link
                   to="/about"
-                  className="group inline-flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-sm text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="group inline-flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-sm text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg border border-white/20 hover:bg-white/20 transition-all duration-300 focus:outline-none"
                 >
-                  <GlobeAltIcon className="h-5 w-5 sm:h-6 sm:w-6 group-hover:text-orange-200 transition-colors" />
+                  <AcademicCapIcon className="h-5 w-5 sm:h-6 sm:w-6 group-hover:text-orange-200 transition-colors" />
                   <span>Learn More</span>
                 </Link>
               </motion.div>
